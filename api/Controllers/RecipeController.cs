@@ -12,12 +12,14 @@ namespace api.Controllers
     public class RecipeController : ControllerBase
     {
         private readonly RecipeService _recipeService;
+
         public RecipeController(RecipeService recipeService)
         {
             _recipeService = recipeService;
         }
+
         [HttpGet("{query}")]
-        public async Task<ActionResult> GetRecipes([FromQuery] string query)
+        public async Task<IActionResult> GetRecipes(string query)
         {
             var result = await _recipeService.GetRecipesAsync(query);
             return result != null
