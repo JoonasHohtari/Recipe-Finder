@@ -14,17 +14,24 @@ namespace api.Services
             _httpClient = httpClient;
             _apiKey = Environment.GetEnvironmentVariable("SPOONACULAR_API_KEY");
         }
-        public async Task<string> GetRecipesAsync(string query)
+        public async Task<string> GetRecipesAsync(string query, int number)
         {
-            var response = await _httpClient.GetStringAsync($"https://api.spoonacular.com/recipes/complexSearch?apiKey={_apiKey}&query={query}");
-
+            var response = await _httpClient.GetStringAsync($"https://api.spoonacular.com/recipes/complexSearch?apiKey={_apiKey}&query={query}&number={number}");
             if (response == null)
             {
                 return null;
             }
-
             return response;
-
         }
+        public async Task<string> GetRandomRecipesAsync(int number)
+        {
+            var response = await _httpClient.GetStringAsync($"https://api.spoonacular.com/recipes/random?apiKey={_apiKey}&number={number}");
+            if (response == null)
+            {
+                return null;
+            }
+            return response;
+        }
+
     }
 }
