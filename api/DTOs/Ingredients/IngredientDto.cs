@@ -4,9 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using api.DTOs.Measurements;
 
-namespace api.DTOs.Ingridients
+namespace api.DTOs.Ingredients
 {
-    public class IngridientDto
+    public class IngredientDto
     {
         public string Aisle { get; set; }
         public double Amount { get; set; }
