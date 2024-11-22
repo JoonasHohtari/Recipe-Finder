@@ -19,6 +19,9 @@ builder.Services.AddSwaggerGen(c =>
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 
+// Register RecipeService
+builder.Services.AddScoped<RecipeService>();
+
 var app = builder.Build();
 Env.Load();
 

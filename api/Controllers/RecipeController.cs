@@ -23,7 +23,7 @@ namespace api.Controllers
         }
 
         [HttpGet("{query}/{number}")]
-        public async Task<IActionResult> GetRecipes([FromQuery] string query, [FromQuery] int number)
+        public async Task<IActionResult> GetRecipes(string query, int number)
         {
             var result = await _recipeService.GetRecipesAsync(query, number);
 
@@ -31,9 +31,18 @@ namespace api.Controllers
             {
                 try
                 {
+                    Console.WriteLine("JSON Result:" + result);
                     var recipeResponse = JsonConvert.DeserializeObject<ComplexSearchResponseDto>(result);
+                    Console.WriteLine("Deserialized Response:" + (recipeResponse?.Results != null ? "Not null" : "Null"));
 
-                    return Ok(recipeResponse);
+                    if (recipeResponse?.Results != null)
+                    {
+                        return Ok(recipeResponse.Results);
+                    }
+                    else
+                    {
+                        return StatusCode(500, "Error: Recipe response is null");
+                    }
                 }
                 catch (Exception e)
                 {
@@ -44,7 +53,7 @@ namespace api.Controllers
         }
 
         [HttpGet("random/{number}")]
-        public async Task<IActionResult> GetRandomRecipe([FromQuery] int number)
+        public async Task<IActionResult> GetRandomRecipe(int number)
         {
             var result = await _recipeService.GetRandomRecipeAsync(number);
 
@@ -52,8 +61,18 @@ namespace api.Controllers
             {
                 try
                 {
+                    Console.WriteLine("JSON Result:" + result);
                     var recipeResponse = JsonConvert.DeserializeObject<RandomSearchResponseDto>(result);
-                    return Ok(recipeResponse);
+                    Console.WriteLine("Deserialized Response:" + (recipeResponse?.Recipes != null ? "Not null" : "Null"));
+
+                    if (recipeResponse?.Recipes != null)
+                    {
+                        return Ok(recipeResponse.Recipes);
+                    }
+                    else
+                    {
+                        return StatusCode(500, "Error: Recipe response is null");
+                    }
                 }
                 catch (Exception e)
                 {
